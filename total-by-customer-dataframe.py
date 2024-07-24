@@ -8,5 +8,6 @@ schema= StructType([StructField("UserId",IntegerType(),True),StructField("Produc
 customers=spark.read.schema(schema).csv("customer-orders.csv")
 customers.printSchema()
 customers_reduced=customers.select(customers.UserId,customers.Price)
-customers_total=customers_reduced.groupBy("UserId").agg(func.round(func.sum("Price"),2).alias("total_price")).sort("total_price").show()
+customers_total=customers_reduced.groupBy("UserId").agg(func.round(func.sum("Price"),2).alias("total_price")).sort("total_price")
+customers_total.show(customers_total.count())
 spark.stop()
